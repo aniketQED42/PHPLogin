@@ -1,9 +1,18 @@
+<?php
+session_start();
+$user = $_SESSION['uname'];
+ if($user){
+     echo"Logout to go to the Registration Page!";
+     echo '<a href="Logout.php"><button>LOGOUT</button></a>';
+     exit();
+ }
+?>
 <html>
-    <head>
+    <head> </head>
         <body>
           
           
-        <form method="POST" action="Insert.php">
+        <form  action="" method="POST">
                 <div class="container">
                   <h1>Welcome To The Registration Page</h1>
                   <p><h3>Please fill in this form to create an account.</h3></p>
@@ -23,11 +32,27 @@
                   <label for="passwd"><b>Password : </b></label>
                   <input type="password" placeholder="Enter Password" name="passwd" required><br><br>
               
-                  <button type="submit" class="registerbtn">Register</button>
-                </form> 
+                  <button type="submit" class="registerbtn">REGISTER</button>
+        </form> 
                                
                 </div>
                 
               </body>
-    </head>
 </html>
+
+<?php 
+              //Calling Register Function from User Class
+              include 'User.php';
+              error_reporting(E_ALL);
+              ini_set('display_errors', 1);
+              // echo 123;
+              if($_SERVER["REQUEST_METHOD"]=="POST"){
+              $obj = new User();
+              $hashno = rand(10,100);    //Generating random hash no for user
+              $result = $obj->register($_POST['uname'],$_POST['dob'],$_POST['mobno'],$_POST['email'],$_POST['passwd'],$hashno);
+              $sendemail = $obj->mail($_POST['email'],$hashno);  //Call to Mail Function
+              if(!$result){echo "Failed";}
+              else { echo "A Email Verification Link has been sent to your registered email id : ".$_POST['email']." , Please Verify The Same!";}
+              echo 123;
+              }
+?>
