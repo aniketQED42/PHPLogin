@@ -30,7 +30,12 @@
 
 <?php 
 //Call to login function from User Class
-include 'User.php';
+// include 'User.php';
+
+use aniket\PHPLogin\Connection;
+use aniket\PHPLogin\User;
+require 'vendor/autoload.php';
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 // function __autoload($class){
@@ -53,4 +58,5 @@ else{
     }
     header('location:Hello.php');
 }
-}?>
+}
+?>

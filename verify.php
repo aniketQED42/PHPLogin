@@ -1,7 +1,9 @@
 <?php 
 
 // include ('Connection.php');
-include ('User.php');
+// include ('User.php');
+use aniket\PHPLogin\User;
+require 'vendor/autoload.php';
 
 //$obj = new Connection();
 // $ob = $obj->dbh;

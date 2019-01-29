@@ -1,5 +1,11 @@
 {
+    "name": "",
+   "description": "",
+   "autoload": {
+   "psr-4": {"aniket\\PHPLogin\\": "src/"}
+},
     "require": {
         "phpmailer/phpmailer": "^6.0"
     }
+
 }

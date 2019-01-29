@@ -42,7 +42,11 @@ $user = $_SESSION['uname'];
 
 <?php 
               //Calling Register Function from User Class
-              include 'User.php';
+            //   include 'User.php';
+
+            use aniket\PHPLogin\User;
+            require 'vendor/autoload.php';
+
               error_reporting(E_ALL);
               ini_set('display_errors', 1);
               // echo 123;
@@ -53,6 +57,6 @@ $user = $_SESSION['uname'];
               $sendemail = $obj->mail($_POST['email'],$hashno);  //Call to Mail Function
               if(!$result){echo "Failed";}
               else { echo "A Email Verification Link has been sent to your registered email id : ".$_POST['email']." , Please Verify The Same!";}
-              echo 123;
+            //   echo 123;
               }
 ?>
