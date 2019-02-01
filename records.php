@@ -29,7 +29,7 @@ $ob = $obj->display($_POST['abc']);
 
 
 // var_dump($ob);exit();
-echo "<table border=2>";
+echo "<table border=1>";
        echo "<tr><th>UserID</th><th>Username</th><th>Date of Birth</th><th>Mobile Number</th><th>E-mail</th><th>Password</th><th>Active</th><th>Hash</th><th>Role</th></tr>";
        for ( $row = 0; $row < count($ob); $row++ )
        {

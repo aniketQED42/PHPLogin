@@ -37,9 +37,15 @@ $user = $_SESSION['uname'];
                   <input type="password" placeholder="Enter Password" name="passwd" required><br><br>
                     
                    <?php //Additional functionality for admin registeration
-                   if($_SESSION['aname']=='admin'){
-                    echo '<h1> Welcome Admin';
-                }?>
+                   if($_SESSION['aname']=='admin'){?>
+                Select Role : 
+                        <select name="abc">
+                        <option  value="admin">Admin<br></option>
+                        <option  value="user">User<br></option>
+                        
+</select> 
+                      <?php } ?>
+                
               
                   <button type="submit" class="registerbtn">REGISTER</button>
         </form> 
@@ -52,7 +58,7 @@ $user = $_SESSION['uname'];
 <?php 
               //Calling Register Function from User Class
             //   include 'User.php';
-
+                   
             use aniket\PHPLogin\User;
             require 'vendor/autoload.php';
 
@@ -62,10 +68,18 @@ $user = $_SESSION['uname'];
               if($_SERVER["REQUEST_METHOD"]=="POST"){
               $obj = new User();
               $hashno = rand(10,100);    //Generating random hash no for user
-              $result = $obj->register($_POST['uname'],$_POST['dob'],$_POST['mobno'],$_POST['email'],$_POST['passwd'],$hashno);
+              $activate;
+              if ($_POST['abc']=='admin' || $_POST['abc']=='user'){
+                   $activate = 1;
+               } else {
+                   $activate = 0;
+               }
+              $result = $obj->register($_POST['uname'],$_POST['dob'],$_POST['mobno'],$_POST['email'],$_POST['passwd'],$activate,$hashno,$_POST['abc']);
+              if ($activate == 1){ echo "New User Registered via Admin!";}
+                if ($activate == 0){
               $sendemail = $obj->mail($_POST['email'],$hashno);  //Call to Mail Function
               if(!$result){echo "Failed";}
-              else { echo "A Email Verification Link has been sent to your registered email id : ".$_POST['email']." , Please Verify The Same!";}
+              else { echo "A Email Verification Link has been sent to your registered email id : ".$_POST['email']." , Please Verify The Same!";}}
             //   echo 123;
-              }
+            } 
 ?>

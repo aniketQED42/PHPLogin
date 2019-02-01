@@ -1,10 +1,10 @@
 <?php //Welcome Admin Page
 session_start();
 $user = $_SESSION['aname'];
-print_r($user);
 // print_r($_SESSION['uname']);exit();
  if(!$user){
-     echo"To go to Login Page plese Logout First!";
+     echo 'LOGIN FIRST!';
+     echo '<br><a href="Logout.php"><button>Login Page</button></a>';
      exit();
  }
 

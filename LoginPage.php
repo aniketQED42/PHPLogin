@@ -1,7 +1,8 @@
  <?php 
  session_start();
  $user = $_SESSION['uname'];
- if($user){
+ $admin = $_SESSION['aname'];
+ if($user || $admin){
      echo"To go to Login Page plese Logout First!";
      exit();
  }

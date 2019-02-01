@@ -12,6 +12,7 @@ ini_set('display_errors', 1);
 // }
 class User extends Connection{
     public $name;
+    public $id;
     public $dob;
     public $mobno;
     public $email;
@@ -19,6 +20,7 @@ class User extends Connection{
     public $hashno;
     public $role;
     public $userid;
+    public $activate;
     
     //Login Function
     public function login($name,$passwd){
@@ -33,10 +35,20 @@ class User extends Connection{
         
     }
     //Registration Function
-    public function register($name,$dob,$mobno,$email,$passwd,$hashno){
+    public function register($name,$dob,$mobno,$email,$passwd,$activate,$hashno,$role){
         $db = new Connection();
         $p = md5($passwd);
-        $que="INSERT INTO UserInfo (uname, dob, mobno, email, passwd,hashno) VALUES ('$name', '$dob', '$mobno', '$email', '$p','$hashno')";
+        $que="INSERT INTO UserInfo (uname, dob, mobno, email,passwd,activeuser,hashno,roles) VALUES ('$name', '$dob', '$mobno', '$email', '$p','$activate','$hashno','$role')";
+        $stmt=$db->dbh->prepare($que);
+        $aa = $stmt->execute();
+        return $aa;
+        print_r($aa);
+    }
+
+    //Update Function
+    public function updateuser($id,$name,$dob,$mobno,$email,$activate,$role){
+        $db = new Connection();        
+        $que="UPDATE UserInfo SET uname='$name', dob='$dob', mobno='$mobno', email='$email',activeuser='$activate',roles='$role' WHERE userid='$id'";
         $stmt=$db->dbh->prepare($que);
         $aa = $stmt->execute();
         return $aa;
@@ -110,6 +122,8 @@ class User extends Connection{
             return false;
         }
         }
+
+        
     
     
 
