@@ -1,27 +1,33 @@
 <html>
 	<body>
-    <?php 
+    <?php error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+    include "Connection.php";
 
 $name=$_POST["uname"];
 $dob=$_POST["dob"];
 $email=$_POST["email"];
 $mobno=$_POST["mobno"];
-$passwd=$_POST["passwd"];		         
+$passwd=$_POST["passwd"];	         
 	            try {
-                        $user = "root";
-                        $pass = "root";
-                        $dbh = new PDO('mysql:host=localhost;dbname=UserLogin', $user, $pass);
-                        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        //$queryobject =  new InsertQuery();                        
+                        // $user = "root";
+                        // $pass = "root";
+                        // $dbh = new PDO('mysql:host=localhost;dbname=UserLogin', $user, $pass);
+                        // $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        // print_r($dbh);
+                         $obj = new Connection();
+                                            
                         $que="INSERT INTO UserInfo (uname, dob, mobno, email, passwd) VALUES ('$name', '$dob', '$mobno', '$email', '$passwd')";
-                        $stmt=$dbh->prepare($que);
+                        print_r($obj); 
+                        $stmt=$obj->prepare($que);
                         $stmt->execute();
 
                   } catch (PDOException $e) {
                   print "Error!: " . $e->getMessage() . "<br/>";
                   die();
                 }
-                $dbh = null; 
+                $obj = null; 
             
 
         ?>

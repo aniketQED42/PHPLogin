@@ -5,7 +5,8 @@ use \PDO;
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-class Connection{
+//DB Connection Class
+class Connection{ 
 
     public  $user = "root";
     public  $pass = "root"; 

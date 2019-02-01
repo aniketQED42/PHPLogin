@@ -1,13 +1,14 @@
 <?php
 namespace aniket\PHPlogin;
-
 use aniket\PHPLogin\Connection;
+//use \PDO;
 require 'vendor/autoload.php';
+
 // include 'Connection.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-// function __autoload($class){
-//     include_once ($class.".php");
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 // }
 class User extends Connection{
     public $name;
@@ -16,6 +17,8 @@ class User extends Connection{
     public $email;
     public $passwd;
     public $hashno;
+    public $role;
+    public $userid;
     
     //Login Function
     public function login($name,$passwd){
@@ -53,7 +56,62 @@ class User extends Connection{
             return false;
         }
         
+    } 
+
+    //Checking for admin
+    public function checkadmin($name,$passs)
+               {
+                   $dbh = new Connection();
+                   $stmt=$dbh->dbh->prepare("SELECT userid FROM UserInfo WHERE uname='$name' and passwd='$passs' and roles='admin'");
+                   $stmt->execute();
+                   //$stmt->setFetchMode(PDO::FETCH_ASSOC);
+                   $r=$stmt->fetch();
+                   if($r)
+                   {
+                       return true;
+                   }
+                   else
+                   {
+                       return false;
+                   }
+               }
+
+    //Function to Delete User
+    public function deleteuser($userid){
+        $dbh = new Connection();
+        if ($userid == 1){ return false;}
+        else {$stmt=$dbh->dbh->prepare("DELETE FROM UserInfo WHERE userid='$userid'");
+        $stmt->execute();
+        $result = $stmt->execute();
+        if ($result){
+            return true;
+        } 
+        else {
+            return false;
+        }
+        }
     }
+
+    //Display Function
+    public function display($role){
+        $dbh = new Connection();
+        if($role=="all"){
+       $stmt=$dbh->dbh->prepare("SELECT * from UserInfo");}
+       else{
+           $stmt=$dbh->dbh->prepare("SELECT * from UserInfo where roles='$role'");
+        }
+        $stmt->execute();
+        $result = $stmt->execute();
+        $result1 = $stmt->fetchAll();
+        if ($result1){
+            return $result1;
+        } 
+        else {
+            return false;
+        }
+        }
+    
+    
 
     //Email Function
     public function mail($email,$hashno){

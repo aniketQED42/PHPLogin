@@ -1,12 +1,13 @@
 <?php
 session_start();
 $user = $_SESSION['uname'];
- if($user){
+ if($user && $_SESSION['aname']!='admin'){
      echo"Logout to go to the Registration Page!";
      echo '<a href="Logout.php"><button>LOGOUT</button></a>';
      exit();
  }
 ?>
+
 <html>
     <head> </head>
         <body>
@@ -14,7 +15,10 @@ $user = $_SESSION['uname'];
           
         <form  action="" method="POST">
                 <div class="container">
-                  <h1>Welcome To The Registration Page</h1>
+                <?php if($_SESSION['aname']=='admin'){
+                    echo '<h1> Welcome Admin';
+                }else{
+                  echo '<h1>Welcome To The Registration Page</h1>';}?>
                   <p><h3>Please fill in this form to create an account.</h3></p>
                   
                   <label for="uname"><b>Name</b></label>
@@ -31,6 +35,11 @@ $user = $_SESSION['uname'];
               
                   <label for="passwd"><b>Password : </b></label>
                   <input type="password" placeholder="Enter Password" name="passwd" required><br><br>
+                    
+                   <?php //Additional functionality for admin registeration
+                   if($_SESSION['aname']=='admin'){
+                    echo '<h1> Welcome Admin';
+                }?>
               
                   <button type="submit" class="registerbtn">REGISTER</button>
         </form> 
